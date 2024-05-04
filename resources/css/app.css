@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .offcanvas.show.hiding ~ main {
+        @apply !tw-ml-0;
+    }
+    .offcanvas.showing ~ main,
+    .offcanvas.show ~ main {
+        @apply tw-ml-72;
+    }
+}
