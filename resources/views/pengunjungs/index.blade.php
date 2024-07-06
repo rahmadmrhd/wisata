@@ -117,7 +117,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 id="title" class="tw-text-2xl tw-font-semibold tw-text-white">
+              <h1 id="title" class="dark:tw-text-white tw-text-2xl tw-font-semibold tw-text-gray-100">
                 Pengunjung Baru
               </h1>
             </div>
