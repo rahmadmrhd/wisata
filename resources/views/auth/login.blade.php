@@ -1,7 +1,7 @@
 <x-auth-layout>
-  <div class="card !tw-flex-row !tw-rounded-lg tw-shadow-lg">
+  <div class="card !tw-flex-row tw-overflow-hidden !tw-rounded-lg tw-shadow-lg">
     <img src="https://i.pinimg.com/736x/9b/f1/6b/9bf16bb76f4865ed7065e25cef25f4c6.jpg"
-      class="tw-relative tw-h-auto tw-w-96 tw-border-r-2 tw-border-gray-700 tw-pr-1" />
+      class="dark:tw-border-gray-700 tw-relative tw-h-auto tw-w-96 tw-border-r-2 tw-border-gray-200 tw-pr-1" />
     <div class="card-body tw-min-w-80 tw-m-4">
       <h1 class="tw-mb-6 tw-text-3xl tw-font-bold">Login</h1>
       <x-alert />

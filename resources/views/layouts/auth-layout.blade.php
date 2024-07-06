@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -10,11 +10,17 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="ttps://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body>
-  <div class="tw-fixed tw-flex tw-h-full tw-w-full tw-items-center tw-justify-center tw-bg-gray-900">
+  <div class="tw-absolute tw-left-4 tw-top-4 tw-z-40">
+    <x-toggle-theme />
+  </div>
+  <div
+    class="dark:tw-bg-gray-900 tw-fixed tw-flex tw-h-full tw-w-full tw-items-center tw-justify-center tw-bg-gray-100">
     {{ $slot }}
   </div>
 </body>

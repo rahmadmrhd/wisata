@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PengunjungExport;
 use App\Http\Requests\PengunjungRequest;
 use App\Models\Pengunjung;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Maatwebsite\Excel\Facades\Excel;
+use Spatie\Browsershot\Browsershot;
 
 class PengunjungController extends Controller {
   /**
@@ -24,14 +29,6 @@ class PengunjungController extends Controller {
 
     return view('pengunjungs.index', [
       'pengunjungs' => $pengunjung->paginate(10),
-    ]);
-  }
-
-  /**
-   * Show the form for creating a new resource.
-   */
-  public function create() {
-    return view('pengunjungs.form', [
       'kode' => Pengunjung::generateKode(),
     ]);
   }
@@ -50,19 +47,10 @@ class PengunjungController extends Controller {
   }
 
   /**
-   * Display the specified resource.
-   */
-  public function show(Pengunjung $pengunjung) {
-    //
-  }
-
-  /**
    * Show the form for editing the specified resource.
    */
   public function edit(Pengunjung $pengunjung) {
-    return view('pengunjungs.form', [
-      'pengunjung' => $pengunjung
-    ]);
+    return response()->json($pengunjung);
   }
 
   /**
@@ -87,5 +75,19 @@ class PengunjungController extends Controller {
       'type' => 'success',
       'message' => 'Data pengunjung berhasil dihapus',
     ]);
+  }
+
+  public function export($type) {
+    set_time_limit(300);
+    switch ($type) {
+      case 'pdf':
+        $pengunjungs = Pengunjung::latest()->get();
+        $pdf = Pdf::loadView('pengunjungs.print', ['pengunjungs' => $pengunjungs])->setPaper('a4', 'portrait');
+        return $pdf->stream('Laporan Pengunjung');
+      case 'excel':
+        return Excel::download(new PengunjungExport, 'Laporan Pengunjung.xlsx');
+      default:
+        abort(404);
+    }
   }
 }

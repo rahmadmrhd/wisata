@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider {

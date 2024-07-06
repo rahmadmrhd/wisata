@@ -1,5 +1,8 @@
 <?php
 
 return [
-    App\Providers\AppServiceProvider::class,
+  Maatwebsite\Excel\ExcelServiceProvider::class,
+  Barryvdh\Snappy\ServiceProvider::class,
+  App\Providers\AppServiceProvider::class,
+  \Barryvdh\DomPDF\ServiceProvider::class
 ];

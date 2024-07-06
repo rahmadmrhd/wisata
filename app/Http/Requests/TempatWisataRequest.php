@@ -27,6 +27,7 @@ class TempatWisataRequest extends FormRequest {
       'harga_tiket' => ['required', 'numeric'],
       'jam_buka' => ['required', 'date_format:H:i'],
       'jam_tutup' => ['required', 'date_format:H:i', 'after:jam_buka'],
+      'gambar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
     ];
   }
 }

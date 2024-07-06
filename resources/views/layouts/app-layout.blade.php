@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -10,6 +10,8 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -28,6 +30,7 @@
         <H1 class="tw-text-xl tw-font-bold">WISATA</H1>
       </div>
       <div class="tw-flex tw-items-center tw-gap-x-4">
+        <x-toggle-theme />
         <form action="{{ route('logout') }}" method="POST" class="dropdown">
           @csrf
           @method('DELETE')
@@ -61,7 +64,7 @@
   <div class="offcanvas offcanvas-start !tw-top-16 !tw-z-[39] !tw-w-72" tabindex="-1" id="sidebar"
     data-bs-scroll="true" data-bs-backdrop="false">
     <div class="offcanvas-body">
-      <ul class="tw-divide-y tw-divide-gray-700 tw-font-medium" id="sidebar-menu">
+      <ul class="dark:tw-divide-gray-700 tw-divide-y tw-divide-gray-200 tw-font-medium" id="sidebar-menu">
         <li class="tw-py-1">
           <a href="/pengunjungs" class="btn tw-flex tw-h-12 tw-w-full tw-items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
@@ -105,6 +108,42 @@
     class="tw-ml-0 tw-mt-16 tw-p-4 tw-transition-all tw-duration-300 tw-ease-[cubic-bezier(0.45,_0.05,_0.55,_0.95)]">
     {{ $slot }}
   </main>
+  <div id="loading-box"
+    class="dark:tw-bg-gray-900/80 tw-fixed tw-bottom-0 tw-left-0 tw-right-0 tw-top-0 tw-z-[100] tw-hidden tw-items-center tw-justify-center tw-overflow-y-auto tw-bg-gray-900/50 tw-p-4">
+    <div
+      class="tw-min-h-6 dark:tw-bg-gray-800 tw-flex tw-max-h-full tw-max-w-[60%] tw-items-center tw-gap-6 tw-rounded-xl tw-bg-white tw-p-4 tw-shadow">
+      <div role="status">
+        <svg aria-hidden="true"
+          class="dark:tw-text-gray-600 tw-h-10 tw-w-10 tw-animate-spin tw-fill-blue-600 tw-text-gray-200"
+          viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+            fill="currentColor" />
+          <path
+            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+            fill="currentFill" />
+        </svg>
+        <span class="tw-sr-only">Loading...</span>
+      </div>
+      <div>
+        <h3 id="loading-title" class="tw-mb-1 tw-text-lg tw-font-medium empty:tw-hidden">Loading...</h3>
+        <p id="loading-description" class="empty:hidden"></p>
+      </div>
+    </div>
+  </div>
+  <script>
+    const loading = document.getElementById('loading-box');
+
+    window.showLoading = () => {
+      loading.classList.remove('tw-hidden');
+      loading.classList.add('tw-flex');
+    }
+
+    window.hideLoading = () => {
+      loading.classList.remove('tw-flex');
+      loading.classList.add('tw-hidden');
+    }
+  </script>
 </body>
 
 </html>

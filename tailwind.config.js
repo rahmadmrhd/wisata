@@ -9,5 +9,12 @@ export default {
     extend: {},
   },
   plugins: [],
-  prefix: 'tw-'
+  prefix: 'tw-',
+  darkMode: 'selector',
+  extend: {
+    screens: {
+      print: { raw: 'print' },
+      screen: { raw: 'screen' },
+    },
+  },
 }

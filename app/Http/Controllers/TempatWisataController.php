@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TempatWisataExport;
 use App\Http\Requests\TempatWisataRequest;
 use App\Models\TempatWisata;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TempatWisataController extends Controller {
   /**
@@ -24,6 +28,7 @@ class TempatWisataController extends Controller {
 
     return view('tempat_wisatas.index', [
       'tempat_wisatas' => $tempat_wisata->paginate(10),
+      'kode' => TempatWisata::generateKode(),
     ]);
   }
 
@@ -31,9 +36,7 @@ class TempatWisataController extends Controller {
    * Show the form for creating a new resource.
    */
   public function create() {
-    return view('tempat_wisatas.form', [
-      'kode' => TempatWisata::generateKode(),
-    ]);
+    // 
   }
 
   /**
@@ -41,6 +44,10 @@ class TempatWisataController extends Controller {
    */
   public function store(TempatWisataRequest $request) {
     $data = $request->validated();
+
+    if ($request->hasFile('gambar')) {
+      $data['gambar'] = $request->file('gambar')->store('gambar');
+    }
 
     TempatWisata::create($data);
     return redirect('/tempat_wisatas')->with('alert', [
@@ -62,9 +69,7 @@ class TempatWisataController extends Controller {
   public function edit(TempatWisata $tempat_wisata) {
     $tempat_wisata->jam_buka = Carbon::parse($tempat_wisata->jam_buka)->format('H:i');
     $tempat_wisata->jam_tutup = Carbon::parse($tempat_wisata->jam_tutup)->format('H:i');
-    return view('tempat_wisatas.form', [
-      'tempat_wisata' => $tempat_wisata
-    ]);
+    return response()->json($tempat_wisata);
   }
 
   /**
@@ -72,6 +77,13 @@ class TempatWisataController extends Controller {
    */
   public function update(TempatWisataRequest $request, TempatWisata $tempat_wisata) {
     $data = $request->validated();
+
+    if ($request->hasFile('gambar')) {
+      if ($tempat_wisata->gambar) {
+        Storage::delete($tempat_wisata->gambar);
+      }
+      $data['gambar'] = $request->file('gambar')->store('gambar');
+    }
 
     $tempat_wisata->update($data);
     return redirect('/tempat_wisatas')->with('alert', [
@@ -89,5 +101,18 @@ class TempatWisataController extends Controller {
       'type' => 'success',
       'message' => 'Data tempat wisata berhasil dihapus',
     ]);
+  }
+
+  public function export($type) {
+    switch ($type) {
+      case 'pdf':
+        $tempat_wisatas = TempatWisata::latest()->get();
+        $pdf = Pdf::loadview('tempat_wisatas.print', ['tempat_wisatas' => $tempat_wisatas]);
+        return $pdf->stream('Laporan Tempat Wisata');
+      case 'excel':
+        return Excel::download(new TempatWisataExport, 'Laporan Tempat Wisata.xlsx');
+      default:
+        abort(404);
+    }
   }
 }

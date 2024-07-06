@@ -17,6 +17,7 @@ return new class extends Migration {
       $table->integer('harga_tiket');
       $table->time('jam_buka');
       $table->time('jam_tutup');
+      $table->text('gambar')->nullable();
       $table->timestamps();
     });
   }

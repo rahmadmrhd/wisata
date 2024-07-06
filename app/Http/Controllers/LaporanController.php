@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class LaporanController extends Controller {
   public function index() {
+    return view('laporan');
+  }
+
+  public function getLaporan() {
     $jkPengunjung = Pengunjung::selectRaw('count(*) as total, jenis_kelamin')->groupBy('jenis_kelamin')->get();
     $laporanBulanan = Pengunjung::selectRaw('count(*) as total, MONTH(tgl_berkunjung) as bulan, YEAR(tgl_berkunjung) as tahun')->orderByRaw('tahun ASC, bulan ASC')->groupByRaw('bulan, tahun')->get();
     $laporanBulanan = $laporanBulanan->map(function ($item) {
@@ -18,7 +22,7 @@ class LaporanController extends Controller {
     });
     $tahunBuka = TempatWisata::selectRaw('count(*) as total, tahun_buka')->orderBy('tahun_buka', 'asc')->groupBy('tahun_buka')->get();
 
-    return view('laporan', [
+    return response()->json([
       'jkPengunjung' => $jkPengunjung,
       'laporanBulanan' => $laporanBulanan,
       'tahunBuka' => $tahunBuka
