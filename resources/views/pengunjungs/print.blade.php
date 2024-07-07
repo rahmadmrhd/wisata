@@ -1,4 +1,9 @@
 <x-print-layout title="Laporan Pengunjung">
+
+  <h2>
+    Laporan Pengunjung
+  </h2>
+
   <table class="table table-hover">
     <thead>
       <tr>

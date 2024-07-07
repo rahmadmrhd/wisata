@@ -129,7 +129,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 id="title" class="dark:tw-text-white tw-text-2xl tw-font-semibold tw-text-gray-100">
+              <h1 id="title" class="dark:tw-text-white tw-text-2xl tw-font-semibold tw-text-gray-900">
                 Pengunjung Baru
               </h1>
             </div>

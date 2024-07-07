@@ -60,6 +60,13 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+h2 {
+    font-size: 18pt;
+    text-align: center;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 @media print {
     @page {
